@@ -341,11 +341,12 @@ def replace_groupnorm(norm: nn.GroupNorm, masks):
     new_num_channels = remained_in.size()[0]
 
     assert new_num_channels % norm.num_groups == 0
+    new_num_groups = new_num_channels // norm.num_groups
 
     _logger.debug(f"replace groupnorm (remain/total) ({norm.num_channels}, {new_num_channels})")
 
     new_module = nn.GroupNorm(
-        norm.num_groups,
+        new_num_groups,
         new_num_channels,
         eps=norm.eps,
         affine=norm.affine,

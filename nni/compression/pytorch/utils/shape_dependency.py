@@ -440,7 +440,9 @@ class GroupDependency(Dependency):
         assert isinstance(leaf_module, (torch.nn.GroupNorm))
         group = leaf_module.num_groups
 
-        return group
+        num_channel_per_group = leaf_module.num_channels // group
+
+        return num_channel_per_group
 
 
     def build_dependency(self):
